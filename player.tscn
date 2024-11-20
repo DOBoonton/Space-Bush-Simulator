@@ -1,0 +1,117 @@
+[gd_scene load_steps=13 format=3 uid="uid://cfr01y2dvabae"]
+
+[ext_resource type="Texture2D" uid="uid://cj636pi4ij81c" path="res://SpaceMarine.png" id="1_1djcl"]
+[ext_resource type="Script" path="res://player.gd" id="1_2gstt"]
+[ext_resource type="Texture2D" uid="uid://bkl4pt4djqskh" path="res://Laser.png" id="3_sdmsl"]
+[ext_resource type="Texture2D" uid="uid://dll3knlh56f2g" path="res://LightMask.png" id="4_yrmxm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdycr"]
+atlas = ExtResource("1_1djcl")
+region = Rect2(130, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1lbu"]
+atlas = ExtResource("3_sdmsl")
+region = Rect2(0, 8, 500, 2)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a7ns8"]
+atlas = ExtResource("1_1djcl")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0231"]
+atlas = ExtResource("3_sdmsl")
+region = Rect2(0, 9, 500, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_buctk"]
+atlas = ExtResource("1_1djcl")
+region = Rect2(65, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_je1p4"]
+atlas = ExtResource("3_sdmsl")
+region = Rect2(0, 0, 500, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vnlog"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdycr")
+}],
+"loop": true,
+"name": &"charging",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1lbu")
+}],
+"loop": true,
+"name": &"chargingLaser",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a7ns8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0231")
+}],
+"loop": true,
+"name": &"idleLaser",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_buctk")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_je1p4")
+}],
+"loop": true,
+"name": &"shootLaser",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nukrt"]
+radius = 19.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_2gstt")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(1, 0)
+color = Color(0, 0.890196, 0.890196, 0.52549)
+energy = 0.2
+texture = ExtResource("4_yrmxm")
+texture_scale = 5.0
+
+[node name="LaserSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(250, 7)
+sprite_frames = SubResource("SpriteFrames_vnlog")
+animation = &"chargingLaser"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vnlog")
+animation = &"shootLaser"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-11, 0)
+shape = SubResource("CircleShape2D_nukrt")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+target_position = Vector2(500, 0)
+
+[node name="ChargeTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]

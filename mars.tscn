@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://bd20s235ucvj4"]
+
+[ext_resource type="PackedScene" uid="uid://cfr01y2dvabae" path="res://player.tscn" id="1_0jek5"]
+[ext_resource type="Script" path="res://Mars.gd" id="1_1cjw8"]
+[ext_resource type="PackedScene" uid="uid://bo8wvhl0tcqu8" path="res://zombie.tscn" id="2_5m585"]
+[ext_resource type="Texture2D" uid="uid://b3cl8h5nkpcce" path="res://Space Marine Mars.png" id="4_cvdu4"]
+
+[node name="Mars" type="Node2D"]
+script = ExtResource("1_1cjw8")
+
+[node name="Ground" type="Sprite2D" parent="."]
+position = Vector2(577.579, 324)
+scale = Vector2(1.97561, 1.97561)
+texture = ExtResource("4_cvdu4")
+
+[node name="Player" parent="." instance=ExtResource("1_0jek5")]
+position = Vector2(563, 318)
+
+[node name="Zombie" parent="." instance=ExtResource("2_5m585")]
+position = Vector2(220, 160)
+
+[node name="ZombieTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="TextEdit" type="TextEdit" parent="."]
+visible = false
+offset_right = 1152.0
+offset_bottom = 44.0
+text = "Score: (this will pop up when pressing q, showing current bushes harvested and amount until the next milestone)"
+editable = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+
+[connection signal="timeout" from="ZombieTimer" to="." method="_on_zombie_timer_timeout"]

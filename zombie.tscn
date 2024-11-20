@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://bo8wvhl0tcqu8"]
+
+[ext_resource type="Script" path="res://zombie.gd" id="1_gns7f"]
+[ext_resource type="Texture2D" uid="uid://b1xbsxpkchfd4" path="res://SpaceShrub.png" id="2_fpfbi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gldof"]
+radius = 17.0294
+
+[node name="Zombie" type="CharacterBody2D" groups=["zombieMars"]]
+script = ExtResource("1_gns7f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_fpfbi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-14, -14)
+shape = SubResource("CircleShape2D_gldof")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(10, -10)
+shape = SubResource("CircleShape2D_gldof")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(10, 12)
+shape = SubResource("CircleShape2D_gldof")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("CircleShape2D_gldof")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="."]
+position = Vector2(-16, 5)
+shape = SubResource("CircleShape2D_gldof")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(50, 0)
